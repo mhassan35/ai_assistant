@@ -24,7 +24,7 @@ const Navbar = () => {
             {/* Logo */}
             <div className="flex items-center space-x-4">
               <FaRobot className="w-8 h-8 text-[#00ff9d]" />
-              <span className="text-2xl font-bold text-[#00ff9d]">
+              <span id='logo-nav' className="text-2xl font-bold text-[#00ff9d]">
                 AI Assistant
               </span>
             </div>

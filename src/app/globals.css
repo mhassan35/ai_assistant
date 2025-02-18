@@ -19,3 +19,11 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+
+@media screen and (max-width: 900px) {
+  #logo-nav {
+    display: none;
+  }
+}
