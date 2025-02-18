@@ -18,13 +18,13 @@ const Navbar = () => {
   return (
     <>
       {/* Main Navbar */}
-      <nav className="fixed top-0 w-full z-50 bg-[#0a192f]/95 backdrop-blur-md border-b border-[#64ffda]/10">
+      <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-4">
-              <FaRobot className="w-8 h-8 text-[#00ff9d]" />
-              <span id='logo-nav' className="text-2xl font-bold text-[#00ff9d]">
+              <FaRobot className="w-8 h-8 text-blue-300" />
+              <span id='logo-nav' className="text-2xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
                 AI Assistant
               </span>
             </div>
@@ -35,7 +35,7 @@ const Navbar = () => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-gray-300 hover:text-[#00ff9d] transition-colors duration-300 flex items-center space-x-2"
+                  className="text-gray-300 hover:text-blue-300 transition-colors duration-300 flex items-center space-x-2"
                 >
                   {item.icon}
                   <span>{item.label}</span>
@@ -47,7 +47,7 @@ const Navbar = () => {
             <div className="md:hidden">
               <button
                 onClick={() => setIsSidebarOpen(true)}
-                className="text-gray-300 hover:text-[#00ff9d] transition-colors duration-300"
+                className="text-gray-300 hover:text-blue-300 transition-colors duration-300"
               >
                 <FaBars className="w-6 h-6" />
               </button>
@@ -72,15 +72,15 @@ const Navbar = () => {
 
         {/* Sidebar */}
         <div
-          className={`fixed top-0 right-0 w-[300px] h-full bg-[#0a192f]/95 backdrop-blur-md p-6 transform transition-transform duration-300 ease-in-out ${
+          className={`fixed top-0 right-0 w-[300px] h-full bg-[#020617]/95 backdrop-blur-md p-6 transform transition-transform duration-300 ease-in-out ${
             isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           <div className="flex items-center justify-between mb-8">
-            <FaRobot className="w-8 h-8 text-[#00ff9d]" />
+            <FaRobot className="w-8 h-8 text-blue-300" />
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="text-gray-300 hover:text-[#00ff9d] transition-colors duration-300"
+              className="text-gray-300 hover:text-blue-300 transition-colors duration-300"
             >
               <FaTimes className="w-6 h-6" />
             </button>
@@ -92,7 +92,7 @@ const Navbar = () => {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsSidebarOpen(false)}
-                className="text-gray-300 hover:text-[#00ff9d] transition-colors duration-300 flex items-center space-x-3"
+                className="text-gray-300 hover:text-blue-300 transition-colors duration-300 flex items-center space-x-3"
               >
                 {item.icon}
                 <span>{item.label}</span>
