@@ -18,6 +18,7 @@ const AIChatDemo = () => {
         currentIndex++;
       } else {
         clearInterval(typingInterval);
+        console.log(showFirstMessage);
         setShowFirstMessage(true);
         
         // Show AI typing indicator
