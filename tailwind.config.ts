@@ -1,23 +1,16 @@
 import type { Config } from 'tailwindcss'
-
-const config: Config = {
+ 
+export default {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+ 
+    // Or if using `src` directory:
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      animation: {
-        fadeIn: 'fadeIn 0.5s ease-out forwards',
-        cursor: 'cursor 0.8s ease-in-out infinite',
-        'spin-slow': 'spin 20s linear infinite',
-        'spin-slow-reverse': 'spin 15s linear infinite reverse',
-        'text-gradient': 'text-gradient 4s linear infinite',
-      },
-    },
+    extend: {},
   },
   plugins: [],
-}
-
-export default config
+} satisfies Config
