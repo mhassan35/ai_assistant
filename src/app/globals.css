@@ -42,12 +42,13 @@ html {
 }
 
 /* For Safari and iOS support */
-* {
+/* * {
   -webkit-overflow-scrolling: touch;
-}
+} */
 
 /* Custom scrollbar styling */
-::-webkit-scrollbar {
+
+/* ::-webkit-scrollbar {
   width: 8px;
 }
 
@@ -63,4 +64,4 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(156, 163, 175, 0.7);
 }
-
+ */

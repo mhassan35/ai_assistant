@@ -10,7 +10,7 @@ const HeroSection = () => {
             className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.3 }}
           >
             Your AI Assistant
             <span className="block text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">
@@ -22,7 +22,7 @@ const HeroSection = () => {
             className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
           >
             Experience the power of AI-driven assistance. Streamline your workflow, get instant answers, and boost your productivity.
           </motion.p>
@@ -31,7 +31,7 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
           >
             <Link href="/get-started" className="px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity">
               Get Started
@@ -71,7 +71,7 @@ const HeroSection = () => {
               className="group p-8 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-purple-500/50 transition-all duration-300"
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+              transition={{ duration: 0.3, delay: index * 0.2 }}
               whileHover={{ 
                 y: -5,
                 transition: { duration: 0.2 }
