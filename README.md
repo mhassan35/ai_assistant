@@ -39,7 +39,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 # This is Made By Muhammad Anas And Muhammad Hassan
 
-# This is a simple login and signup system made with Next.js and Tailwind CSS.
-
-# It is a simple login and signup system made with Next.js and Tailwind CSS.
+### This is a simple .
 
