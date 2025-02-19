@@ -1,71 +1,95 @@
-'use client'
-import Link from 'next/link'
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
-export default function HeroSection() {
+const HeroSection = () => {
   return (
-    <section className="relative min-h-screen bg-[#020617] overflow-hidden">
-      {/* Animated background gradient */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#0f172a] to-[#020617] animate-gradient-slower" />
-      </div>
+    <section className="relative min-h-screen pt-20 flex items-center justify-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <motion.h1 
+            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            Your AI Assistant
+            <span className="block text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">
+              For Smarter Solutions
+            </span>
+          </motion.h1>
 
-      {/* Main content */}
-      <div className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Auth buttons */}
-          <div className="flex justify-end gap-4 mb-16">
-            <Link 
-              href="/login"
-              className="group px-4 py-2 text-sm font-medium rounded-lg text-gray-300 hover:text-white border border-gray-700 hover:border-gray-500 transition-all duration-500 hover:bg-gray-800/50"
-            >
-              <span className="relative">
-                Login
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-500 group-hover:w-full transition-all duration-500" />
-              </span>
+          <motion.p 
+            className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Experience the power of AI-driven assistance. Streamline your workflow, get instant answers, and boost your productivity.
+          </motion.p>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <Link href="/get-started" className="px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity">
+              Get Started
             </Link>
-            <Link 
-              href="/signup"
-              className="px-4 py-2 text-sm font-medium rounded-lg text-white bg-gray-800 hover:bg-gray-700 transition-all duration-500 shadow-lg shadow-black/40 border border-gray-700 hover:border-gray-600"
-            >
-              Sign Up
+            <Link href="/demo" className="px-8 py-3 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 transition-all">
+              Try Demo
             </Link>
-          </div>
-
-          {/* Hero content */}
-          <div className="text-center max-w-4xl mx-auto animate-fadeIn">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
-              <span className="block mb-2 text-gray-200">Your Personal</span>
-              <span className="block bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent animate-gradient-slower">
-                AI Assistant
-              </span>
-            </h1>
-            <p className="mt-6 text-lg sm:text-xl text-blue-100/80 max-w-3xl mx-auto leading-relaxed">
-              Experience the future of productivity with our AI-powered assistant. 
-              Get instant answers, creative solutions, and intelligent assistance 
-              available to you 24/7.
-            </p>
-
-            {/* CTA buttons */}
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/try-now"
-                className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-xl text-white bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 hover:from-blue-800 hover:via-blue-700 hover:to-blue-800 transition-all duration-500 shadow-lg shadow-black/30"
-              >
-                Try For Free
-                <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </Link>
-              <Link
-                href="/features"
-                className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-xl text-gray-300 border border-gray-700 hover:border-gray-600 hover:text-white transition-all duration-500"
-              >
-                Learn More
-              </Link>
-            </div>
-          </div>
+          </motion.div>
         </div>
+
+        {/* Feature highlights */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          {[
+            { 
+              title: '24/7 Availability', 
+              description: 'Always ready to assist you',
+              icon: '🌐'
+            },
+            { 
+              title: 'Smart Solutions', 
+              description: 'Powered by advanced AI',
+              icon: '🧠'
+            },
+            { 
+              title: 'Seamless Integration', 
+              description: 'Works with your existing tools',
+              icon: '⚡'
+            },
+          ].map((feature, index) => (
+            <motion.div 
+              key={index}
+              className="group p-8 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-purple-500/50 transition-all duration-300"
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              whileHover={{ 
+                y: -5,
+                transition: { duration: 0.2 }
+              }}
+            >
+              <div className="text-4xl mb-4">{feature.icon}</div>
+              <h3 className="text-2xl font-semibold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                {feature.title}
+              </h3>
+              <p className="text-gray-300 leading-relaxed">
+                {feature.description}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
-  )
-} 
+  );
+};
+
+export default HeroSection;

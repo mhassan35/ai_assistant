@@ -2,107 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@media screen and (max-width: 900px) and (min-width: 767px) {
-  #logo-nav {
+@media screen and (max-width: 900px) and (min-width: 768px) {
+  #logo-nav{
     display: none;
   }
 }
 
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
-.animate-blob {
-  animation: blob 7s infinite;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-  animation-delay: 4s;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
   }
   50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+    transform: translateY(-20px) translateX(10px);
   }
 }
 
-.animate-gradient {
-  animation: gradient 15s ease infinite;
-  background-size: 200% 200%;
-}
-
-.animate-gradient-slow {
-  animation: gradient 8s ease infinite;
-  background-size: 200% 200%;
-}
-
-.bg-size-200 {
-  background-size: 200% 200%;
-}
-
-@keyframes blob-slower {
+@keyframes shooting-star {
   0% {
-    transform: translate(0px, 0px) scale(1);
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    opacity: 0;
   }
-  33% {
-    transform: translate(20px, -30px) scale(1.05);
-  }
-  66% {
-    transform: translate(-15px, 15px) scale(0.95);
+  10%, 90% {
+    opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) scale(1);
+    transform: translateX(200%) translateY(200%) rotate(45deg);
+    opacity: 0;
   }
 }
 
-.animate-gradient-slower {
-  animation: gradient 30s ease infinite;
-  background-size: 200% 200%;
+.animate-slow-pulse {
+  animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.animate-blob-slower {
-  animation: blob-slower 20s infinite;
+/* Smooth scrolling for the whole application */
+html {
+  scroll-behavior: smooth;
 }
 
-.animation-delay-8000 {
-  animation-delay: 8s;
+/* For Safari and iOS support */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.7);
 }

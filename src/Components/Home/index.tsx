@@ -1,14 +1,26 @@
 'use client'
-import HeroSection from './HeroSection'
-import AIChatDemo from './AIChatDemo'
-import FeaturesSection from './FeaturesSection'
+import React from 'react';
+import Features from './Features';
+import AIChatDemo from './AIChatDemo';
+import HeroSection from './HeroSection';
 
-export default function HomePage() {
+const Home = () => {
   return (
-    <main className="min-h-screen bg-[#0A0A0A] text-gray-100">
+    <div> 
       <HeroSection />
-      <AIChatDemo />
-      <FeaturesSection />
-    </main>
-  )
-}
+      {/* AI Chat Demo Section */}
+      <div className="w-full py-32">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500 mb-12">
+            See AI in Action
+          </h2>
+          <AIChatDemo />
+        </div>
+      </div>
+
+      <Features />
+    </div>
+  );
+};
+
+export default Home;
