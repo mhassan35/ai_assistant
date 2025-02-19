@@ -71,7 +71,7 @@ const AIChatDemo = () => {
               )}
               {showResponse && (
                 <div className="bg-white/5 rounded-2xl rounded-tl-none p-4 text-gray-300 border border-purple-500/20">
-                  Of course! I'm here to assist you. What would you like help with?
+                  Of course! I&apos;m here to assist you. What would you like help with?
                 </div>
               )}
             </div>
