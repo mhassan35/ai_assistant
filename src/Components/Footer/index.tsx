@@ -10,7 +10,7 @@ const Footer = () => {
           <h2 className="text-3xl font-bold text-white mb-4">AI Assistant</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Empowering the future through intelligent conversations and innovative solutions.
-            We're committed to making AI technology accessible and beneficial for everyone.
+            We&apos;re committed to making AI technology accessible and beneficial for everyone.
           </p>
         </div>
 
