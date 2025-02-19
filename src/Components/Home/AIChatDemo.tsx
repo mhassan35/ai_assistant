@@ -10,7 +10,7 @@ const AIChatDemo = () => {
     { role: 'user', message: "Hello! Can you help me with coding?" },
     { role: 'assistant', message: "Of course! I'd be happy to help you with coding. What would you like to learn?" },
     { role: 'user', message: "I want to learn Python" },
-    { role: 'assistant', message: "Great choice! Python is a beginner-friendly language. Here's a simple example to get started:\n\nprint('Hello, World!')\n\nWould you like to learn more?" }
+    { role: 'assistant', message: "Great choice! Python is a beginner-friendly language." }
   ];
 
   useEffect(() => {
