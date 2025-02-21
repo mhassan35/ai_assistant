@@ -5,21 +5,52 @@ import { FiSearch, FiPlus, FiSettings, FiShare, FiMic, FiMenu } from 'react-icon
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { FaRobot } from 'react-icons/fa';
 
-interface ChatHistory {
-  title: string;
-  date: string;
+interface Message {
+  id: number;
+  text: string;
+  isUser: boolean;
+  timestamp: string;
 }
 
-export default function ChatPage() {
-  const [chatHistory] = useState<ChatHistory[]>([
-    { title: "How to implement Redux in React...", date: "Today" },
-    { title: "Best practices for API design...", date: "23rd March, 2024" },
-    { title: "Explain Docker containers...", date: "20th March, 2024" },
-  ]);
+export default function Chat() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputMessage, setInputMessage] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputMessage.trim()) return;
+
+    const newMessage: Message = {
+      id: Date.now(),
+      text: inputMessage,
+      isUser: true,
+      timestamp: new Date().toLocaleTimeString([], { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      })
+    };
+
+    setMessages(prev => [...prev, newMessage]);
+    setInputMessage('');
+
+    // Simulate AI response
+    setTimeout(() => {
+      const aiResponse: Message = {
+        id: Date.now() + 1,
+        text: "This is a sample AI response. Replace with your actual AI integration.",
+        isUser: false,
+        timestamp: new Date().toLocaleTimeString([], { 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        })
+      };
+      setMessages(prev => [...prev, aiResponse]);
+    }, 1000);
+  };
+
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden mt-16">
+    <div className="flex flex-col h-[calc(100vh-64px)] mt-16">
       {/* Mobile Menu Button - adjusted for navbar */}
       <button 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -52,13 +83,27 @@ export default function ChatPage() {
 
         {/* Chat history - improved spacing */}
         <div className="flex-1 overflow-y-auto space-y-1 sm:space-y-2">
-          {chatHistory.map((chat, index) => (
+          {messages.map((message) => (
             <div
-              key={index}
-              className="p-2.5 sm:p-3 hover:bg-slate-800 rounded-lg cursor-pointer"
+              key={message.id}
+              className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
             >
-              <h3 className="text-white text-xs sm:text-sm truncate">{chat.title}</h3>
-              <p className="text-gray-400 text-xs mt-0.5">{chat.date}</p>
+              <div
+                className={`max-w-[80%] md:max-w-[70%] rounded-lg px-4 py-2 ${
+                  message.isUser
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 text-gray-100'
+                }`}
+              >
+                <div className="flex flex-col">
+                  <p className="text-sm">{message.text}</p>
+                  <span className={`text-xs mt-1 ${
+                    message.isUser ? 'text-blue-200' : 'text-gray-400'
+                  }`}>
+                    {message.timestamp}
+                  </span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -94,19 +139,26 @@ export default function ChatPage() {
         {/* Input area - improved mobile experience */}
         <div className="p-2 sm:p-4 md:p-6">
           <div className="max-w-3xl mx-auto relative">
-            <input
-              type="text"
-              placeholder="Ask me anything..."
-              className="w-full p-2.5 sm:p-3 md:p-4 pr-16 sm:pr-24 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-            />
-            <div className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 flex gap-1 sm:gap-2">
-              <button className="p-1.5 sm:p-2 hover:bg-slate-100 rounded-full hidden sm:block">
-                <FiMic className="text-lg sm:text-xl text-slate-600" />
+            <form onSubmit={handleSubmit} className="flex space-x-4">
+              <input
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                placeholder="Type your message..."
+                className="flex-1 px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg 
+                         text-gray-100 placeholder-gray-500
+                         focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <button
+                type="submit"
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg
+                         focus:outline-none focus:ring-2 focus:ring-offset-2 
+                         focus:ring-offset-gray-900 focus:ring-blue-500
+                         transition-colors duration-200"
+              >
+                Send
               </button>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-1.5 sm:p-2">
-                <RiSendPlaneFill className="text-lg sm:text-xl" />
-              </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
