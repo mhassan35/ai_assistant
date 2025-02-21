@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import AnimatedBackground from "@/Components/Layout/AnimatedBackground";
 import Footer from "@/Components/Footer";
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-const inter = Inter({ subsets: ["latin"] });
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "AI Assistant",
-  description: "Your personal AI assistant",
+  title: "Ai Assistant",
+  description: "Ai Assistant",
 };
 
 export default function RootLayout({
@@ -19,7 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <AnimatedBackground />
         <Navbar />
         {children}
