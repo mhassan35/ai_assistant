@@ -4,7 +4,6 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react"
 import Navbar from "@/Components/Navbar";
 import AnimatedBackground from "@/Components/Layout/AnimatedBackground";
-import Footer from "@/Components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +24,7 @@ export default function RootLayout({
         <AnimatedBackground />
         <Navbar />
         {children}
-        <Footer />
+  
       </body>
     </html>
   );
