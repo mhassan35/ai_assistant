@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { FaRobot, FaEnvelope, FaBars, FaTimes, FaUtensils, FaDumbbell, FaHeartbeat, FaQuestionCircle } from 'react-icons/fa';
+import { FaRobot, FaEnvelope, FaBars, FaUtensils, FaDumbbell, FaHeartbeat, FaQuestionCircle } from 'react-icons/fa';
 import MobileSidebar from './MobileSidebar';
 
 const Navbar = () => {
