@@ -3,65 +3,12 @@
 @tailwind utilities;
 
 
-@media screen and (max-width: 900px) and (min-width: 768px) {
+@media screen and (max-width: 980px) and (min-width: 768px) {
   #logo-nav{
     display: none;
   }
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
-  }
-  50% {
-    transform: translateY(-20px) translateX(10px);
-  }
-}
-
-@keyframes shooting-star {
-  0% {
-    transform: translateX(-100%) translateY(-100%) rotate(45deg);
-    opacity: 0;
-  }
-  10%, 90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(200%) translateY(200%) rotate(45deg);
-    opacity: 0;
-  }
-}
-
-.animate-slow-pulse {
-  animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Smooth scrolling for the whole application */
 html {
   scroll-behavior: smooth;
 }
-
-/* For Safari and iOS support */
-/* * {
-  -webkit-overflow-scrolling: touch;
-} */
-
-/* Custom scrollbar styling */
-
-/* ::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.5);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.7);
-}
- */

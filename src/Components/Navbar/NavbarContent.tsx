@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { FaRobot, FaEnvelope, FaBars, FaTimes, FaUtensils, FaDumbbell, FaHeartbeat, FaQuestionCircle } from 'react-icons/fa';
+import MobileSidebar from './MobileSidebar';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -18,21 +19,21 @@ const Navbar = () => {
   return (
     <>
       {/* Main Navbar */}
-      <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-md border-b border-purple-500/20">
+      <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 border-b border-purple-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/">
             <div className="flex items-center space-x-4">
               <FaRobot className="w-8 h-8 text-purple-400" />
-              <span id='logo-nav' className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+              <span id='logo-nav' className="text-2xl font-bold bg-purple-400  bg-clip-text text-transparent">
                 AI Assistant
               </span>
             </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex md:items-center md:space-x-8">
+            <div className="hidden md:flex md:items-center md:space-x-7">
               {menuItems.map((item) => (
                 <Link
                   key={item.href}
@@ -59,50 +60,11 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Sidebar */}
-      <div
-        className={`fixed inset-0 z-50 ${
-          isSidebarOpen ? 'visible' : 'invisible'
-        }`}
-      >
-        {/* Overlay */}
-        <div
-          className={`fixed inset-0 bg-black/70 transition-opacity duration-300 ${
-            isSidebarOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          onClick={() => setIsSidebarOpen(false)}
-        />
-
-        {/* Sidebar */}
-        <div
-          className={`fixed top-0 right-0 w-[300px] h-full bg-[#020617]/95 backdrop-blur-md p-6 transform transition-transform duration-300 ease-in-out border-l border-purple-500/20 ${
-            isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          <div className="flex items-center justify-between mb-8">
-            <FaRobot className="w-8 h-8 text-purple-400" />
-            <button
-              onClick={() => setIsSidebarOpen(false)}
-              className="text-gray-300 hover:text-purple-400 transition-colors duration-300"
-            >
-              <FaTimes className="w-6 h-6" />
-            </button>
-          </div>
-
-          <div className="flex flex-col space-y-6">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsSidebarOpen(false)}
-                className="text-gray-300 hover:text-purple-400 transition-colors duration-300 flex items-center space-x-3"
-              >
-                {item.icon}
-                <span>{item.label}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+      <MobileSidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        menuItems={menuItems}
+      />
     </>
   );
 };
