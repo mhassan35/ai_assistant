@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FiSearch, FiPlus, FiSettings, FiShare, FiMic, FiMenu } from 'react-icons/fi';
+import { FiSearch, FiPlus, FiSettings, FiShare, FiMenu } from 'react-icons/fi';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { FaRobot } from 'react-icons/fa';
 
