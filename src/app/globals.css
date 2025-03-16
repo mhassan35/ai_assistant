@@ -13,7 +13,7 @@ html {
   scroll-behavior: smooth;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
+/* .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
 
@@ -28,4 +28,4 @@ html {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #718096;
-}
+} */
