@@ -45,12 +45,12 @@ const ChatPage = () => {
         weight: '',
         bp: '',
         goal: ''
-      }); 
+      });
 
       // Add AI response to chat
       setMessages(prev => [...prev, { text: aiResponse, isAi: true }]);
-    } catch (error) {
-      // Handle error
+    } catch {
+      // Handle error (but no need to define the error variable)
       setMessages(prev => [...prev, { text: "Sorry, there was an error generating the response.", isAi: true }]);
     }
 

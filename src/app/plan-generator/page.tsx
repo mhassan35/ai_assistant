@@ -4,29 +4,30 @@ import { FaHeartbeat } from 'react-icons/fa'; // Keeping FaHeartbeat as it is us
 import { generatePlan } from '../api/generate/plan-generation'; // Import plan generation API handler
 
 const PlanGeneratorPage = () => {
-  const [age, setAge] = useState<string | number>('');
-  const [heartRate, setHeartRate] = useState<string | number>('');
-  const [weight, setWeight] = useState<string | number>('');
-  const [bp, setBp] = useState<string>('');
-  const [goal, setGoal] = useState('weightLoss');
-  const [input, setInput] = useState('');
-  const [generatedPlan, setGeneratedPlan] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [age, setAge] = useState<string | number>(''); // type for age
+  const [heartRate, setHeartRate] = useState<string | number>(''); // type for heartRate
+  const [weight, setWeight] = useState<string | number>(''); // type for weight
+  const [bp, setBp] = useState<string>(''); // type for blood pressure
+  const [goal, setGoal] = useState<'weightLoss' | 'weightGain' | 'maintenance'>('weightLoss');
+  const [input, setInput] = useState(''); // User input for generating the plan
+  const [generatedPlan, setGeneratedPlan] = useState<string>(''); // The plan generated
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const handleGeneratePlan = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    
+    if (!input.trim() || isLoading) return; // Do nothing if input is empty or a plan is being generated
 
-    setIsLoading(true);
+    setIsLoading(true); // Set loading state
 
     try {
       const plan = await generatePlan(input, { age, heartRate, weight, bp, goal });
-      setGeneratedPlan(plan);
-    } catch (error) {
+      setGeneratedPlan(plan); // Set the generated plan
+    } catch {
       setGeneratedPlan("Sorry, there was an error generating your plan. Please try again.");
     }
 
-    setIsLoading(false);
+    setIsLoading(false); // Reset loading state after generating the plan
   };
 
   return (
