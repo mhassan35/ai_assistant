@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { FaRobot, FaEnvelope, FaBars, FaUtensils, FaDumbbell, FaHeartbeat, FaQuestionCircle } from 'react-icons/fa';
+import { FaRobot, FaEnvelope, FaBars, FaPencilAlt, FaQuestionCircle , FaHeartbeat} from 'react-icons/fa';
 import MobileSidebar from './MobileSidebar';
 
 const Navbar = () => {
@@ -10,10 +10,9 @@ const Navbar = () => {
 
   const menuItems = [
     { href: '/chat', icon: <FaEnvelope className="w-5 h-5" />, label: 'Chat' },
-    { href: '/diet-planner', icon: <FaUtensils className="w-5 h-5" />, label: 'Diet Planner' },
-    { href: '/fitness-planner', icon: <FaDumbbell className="w-5 h-5" />, label: 'Fitness Planner' },
-    { href: '/medical-assistant', icon: <FaHeartbeat className="w-5 h-5" />, label: 'Medical Assistant' },
-    { href: '/help', icon: <FaQuestionCircle className="w-5 h-5" />, label: 'Help' },
+    { href: '/plan-generator', icon: <FaPencilAlt className="w-5 h-5" />, label: 'Plan Generator' },
+    { href: '/health-assistant', icon: <FaHeartbeat className="w-5 h-5" />, label: 'Health Assistant' },
+    { href: '/help', icon: <FaQuestionCircle className="w-5 h-5" />, label: 'Help' }
   ];
 
   return (
