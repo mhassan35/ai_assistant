@@ -42,7 +42,7 @@ const PlanGeneratorPage = () => {
               </span>
             </h1>
           </div>
-          <p className="text-gray-400">Generate your personalized health plan based on your inputs</p>
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg">Generate your personalized health plan based on your inputs</p>
         </div>
 
         <div className="bg-gradient-to-br from-purple-900/20 to-blue-900/20 backdrop-blur-xl rounded-2xl border border-gray-700/50 p-6 space-y-6">
@@ -78,25 +78,25 @@ const PlanGeneratorPage = () => {
               />
             </div>
 
-            <div className="space-x-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 md:gap-8">
               <button
                 type="button"
                 onClick={() => setGoal('weightLoss')}
-                className={`px-4 py-2 rounded-xl ${goal === 'weightLoss' ? 'bg-blue-500' : 'bg-gray-600'}`}
+                className={`w-full sm:w-auto px-4 py-2 rounded-xl ${goal === 'weightLoss' ? 'bg-blue-500' : 'bg-gray-600'}`}
               >
                 Weight Loss
               </button>
               <button
                 type="button"
                 onClick={() => setGoal('weightGain')}
-                className={`px-4 py-2 rounded-xl ${goal === 'weightGain' ? 'bg-green-500' : 'bg-gray-600'}`}
+                className={`w-full sm:w-auto px-4 py-2 rounded-xl ${goal === 'weightGain' ? 'bg-green-500' : 'bg-gray-600'}`}
               >
                 Weight Gain
               </button>
               <button
                 type="button"
                 onClick={() => setGoal('maintenance')}
-                className={`px-4 py-2 rounded-xl ${goal === 'maintenance' ? 'bg-yellow-500' : 'bg-gray-600'}`}
+                className={`w-full sm:w-auto px-4 py-2 rounded-xl ${goal === 'maintenance' ? 'bg-yellow-500' : 'bg-gray-600'}`}
               >
                 Maintenance
               </button>
