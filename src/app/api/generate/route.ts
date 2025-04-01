@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const SYSTEM_PROMPT = 'Your base system prompt for Gemini...';
+const SYSTEM_PROMPT = 'You are a helpful assistant, capable of answering general questions and engaging in conversations on various topics.';
 
 export async function POST(request: Request) {
   const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
@@ -12,14 +12,17 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { prompt, age, heartRate, weight, bp, goal } = await request.json();
+    const { prompt } = await request.json(); // Only prompt is needed for general chat
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-    const fullPrompt = `${SYSTEM_PROMPT}\n\nUser: ${prompt}\nAge: ${age}\nHeart Rate: ${heartRate}\nGoal: ${goal}\nAssistant:`;
+    // Construct the prompt with the system's base instructions and the user's input
+    const fullPrompt = `${SYSTEM_PROMPT}\n\nUser: ${prompt}\nAssistant:`;
 
+    // Generate content using the model
     const result = await model.generateContentStream(fullPrompt);
 
+    // Return the generated content in a streamed response
     const stream = new ReadableStream({
       async start(controller) {
         try {

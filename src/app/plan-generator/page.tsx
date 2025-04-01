@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { FaPaperPlane, FaHeartbeat } from 'react-icons/fa';
+import { FaHeartbeat } from 'react-icons/fa'; // Keeping FaHeartbeat as it is used
 import { generatePlan } from '../api/generate/plan-generation'; // Import plan generation API handler
 
 const PlanGeneratorPage = () => {
