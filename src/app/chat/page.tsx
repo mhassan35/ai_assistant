@@ -13,11 +13,6 @@ const ChatPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [age, setAge] = useState<number | string>('');
-  const [heartRate, setHeartRate] = useState<number | string>('');
-  const [weight, setWeight] = useState<number | string>('');
-  const [bp, setBp] = useState<string>('');
-  const [goal, setGoal] = useState('weightLoss');
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -42,11 +37,23 @@ const ChatPage = () => {
     setInput('');
     setIsLoading(true);
 
-    // Call the Plan Generation API
-    const aiResponse = await generatePlan(userMessage, { age, heartRate, weight, bp, goal });
+    try {
+      // Call the API to generate the response (adjust API call accordingly)
+      const aiResponse = await generatePlan(userMessage, {
+        age: '',
+        heartRate: '',
+        weight: '',
+        bp: '',
+        goal: ''
+      }); 
 
-    // Add AI response to chat
-    setMessages(prev => [...prev, { text: aiResponse, isAi: true }]);
+      // Add AI response to chat
+      setMessages(prev => [...prev, { text: aiResponse, isAi: true }]);
+    } catch (error) {
+      // Handle error
+      setMessages(prev => [...prev, { text: "Sorry, there was an error generating the response.", isAi: true }]);
+    }
+
     setIsLoading(false);
   };
 
@@ -79,7 +86,7 @@ const ChatPage = () => {
                 key={index}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={message.isAi ? 'justify-start' : 'justify-end'}
+                className={`flex ${message.isAi ? 'justify-start' : 'justify-end'}`}
               >
                 <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${message.isAi ? 'bg-white/10 text-gray-100' : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white'}`}>
                   {message.text}
