@@ -1,43 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HealthAI — AI Health Assistant
 
-## Getting Started
+A clean, focused AI health assistant built with Next.js and Google's Gemini API. Create an account, ask about
+nutrition, fitness, sleep, and general wellness, and get clear, practical, personalized guidance.
 
-First, run the development server:
+HealthAI is **not a medical device or a replacement for professional care**. It provides general information only,
+and includes built-in safety messaging for emergencies and mental health crises.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Accounts** — email/password signup and login, with sessions stored in signed httpOnly cookies. Passwords are
+  hashed with bcrypt and never stored in plain text.
+- **AI Health Assistant** (`/chat`) — a Gemini-powered chat with streaming responses, full conversation memory,
+  suggested prompts, and automatic safety notices for emergency or crisis language. History is saved to your
+  account.
+- **Health Profile** (`/profile`) — save basic health details (age, activity level, goals, conditions) to
+  personalize the assistant's responses. Tied to your account, so it follows you across devices.
+- **Home** (`/`) — overview of what the assistant can help with.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Getting started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Install dependencies:
 
-## Learn More
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Copy `.env.example` to `.env.local` and fill in the values:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   cp .env.example .env.local
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```
+   GEMINI_API_KEY=your_gemini_api_key_here
+   AUTH_SECRET=a_long_random_string_used_to_sign_session_tokens
+   DATABASE_URL=postgresql://user:password@pooled-host:5432/dbname?sslmode=require
+   DIRECT_URL=postgresql://user:password@direct-host:5432/dbname?sslmode=require
+   ```
 
-## Deploy on Vercel
+   - **`GEMINI_API_KEY`** — from [Google AI Studio](https://aistudio.google.com/app/apikey). Read server-side only
+     (via `/api/chat`), never exposed to the browser.
+   - **`AUTH_SECRET`** — any long random string (e.g. `openssl rand -base64 32`), used to sign session JWTs.
+   - **`DATABASE_URL`** / **`DIRECT_URL`** — a Postgres connection string (e.g. from [Neon](https://neon.tech) or
+     [Supabase](https://supabase.com)). If your provider gives you both a pooled and a direct/unpooled connection
+     string, put the **pooled** one in `DATABASE_URL` (used by the app at runtime) and the **direct** one in
+     `DIRECT_URL` (used by Prisma Migrate, which doesn't work reliably through connection poolers). If you only
+     have one connection string, use it for both.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Create the database schema:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```bash
+   npx prisma migrate dev
+   ```
 
+4. Run the dev server:
 
+   ```bash
+   npm run dev
+   ```
 
-# This is Made By Muhammad Anas And Muhammad Hassan
+   Open [http://localhost:3000](http://localhost:3000).
 
-### This is a simple .
+## Tech stack
 
+- [Next.js](https://nextjs.org) (App Router) + React + TypeScript
+- [Tailwind CSS](https://tailwindcss.com) for styling
+- [Framer Motion](https://www.framer.com/motion/) for animation
+- [`@google/generative-ai`](https://www.npmjs.com/package/@google/generative-ai) for the Gemini integration
+- [Prisma](https://www.prisma.io) + PostgreSQL for accounts, profiles, and chat history
+- [`jose`](https://github.com/panva/jose) + [`bcryptjs`](https://github.com/dcodeIO/bcrypt.js) for sessions and
+  password hashing
+- [`react-markdown`](https://github.com/remarkjs/react-markdown) to render the assistant's formatted responses
+
+## Architecture notes
+
+- All Gemini calls happen server-side in `src/app/api/chat/route.ts`, which streams the model's response back to
+  the client as plain text. The API key lives only in `GEMINI_API_KEY` (server environment), never in client code.
+- Accounts, health profiles, and chat history are stored in Postgres via Prisma (`prisma/schema.prisma`).
+  `src/middleware.ts` protects `/chat` and `/profile`, redirecting signed-out visitors to `/login`; each API route
+  also independently checks the session server-side as the real security boundary.
+- Sessions are signed JWTs (`src/lib/session.ts`, Edge-safe — used by middleware) stored in an httpOnly cookie set
+  by `src/lib/auth.ts` (Node-only — password hashing and cookie access). This split keeps `bcryptjs` and
+  `next/headers` out of the Edge-runtime middleware bundle.
+- `src/lib/emergency.ts` does a lightweight keyword check for emergency/crisis language, both client-side (for an
+  instant inline notice) and server-side (persisted to history). The system prompt sent to Gemini
+  (`src/app/api/chat/route.ts`) reinforces the same safety behavior in the model's own reply.
+- Database calls in the API routes are wrapped in `src/lib/db-retry.ts` (a few retries with backoff) since
+  transient connection blips happen with any hosted Postgres provider; on repeated failure, routes return a clean
+  `503` rather than crashing.
+
+## Disclaimer
+
+HealthAI provides general health and wellness information generated by an AI model. It does not diagnose
+conditions, prescribe treatment, or replace professional medical advice. If you have a medical emergency, call
+your local emergency number immediately.

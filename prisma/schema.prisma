@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  profile      Profile?
+  messages     Message[]
+}
+
+model Profile {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String   @default("")
+  age           String   @default("")
+  sex           String   @default("")
+  heightCm      String   @default("")
+  weightKg      String   @default("")
+  activityLevel String   @default("")
+  goal          String   @default("")
+  conditions    String   @default("")
+  updatedAt     DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String
+  content   String
+  level     String?
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+}

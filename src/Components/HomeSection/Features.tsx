@@ -1,115 +1,78 @@
 'use client'
 import { motion } from 'framer-motion';
-import { FaHeartbeat, FaAppleAlt, FaRunning, FaBrain, FaBed, FaWeight, FaNotesMedical, FaChartLine } from 'react-icons/fa';
+import { FaAppleAlt, FaBrain, FaShieldAlt, FaUserCircle } from 'react-icons/fa';
 
 const Features = () => {
   const features = [
     {
-      icon: <FaHeartbeat className="w-10 h-10" />,
-      title: "Health Monitoring",
-      description: "Track vital signs, heart rate, and overall wellness with AI-powered insights.",
-      color: "from-red-500 to-rose-600",
-      gradient: "group-hover:bg-gradient-to-br from-red-500/20 to-rose-500/20"
+      icon: <FaAppleAlt className="w-8 h-8" />,
+      title: "Nutrition & Fitness",
+      description: "Ask about meals, workouts, and healthy habits and get clear, practical guidance in plain language.",
+      color: "from-teal-500 to-emerald-600",
     },
     {
-      icon: <FaAppleAlt className="w-10 h-10" />,
-      title: "Nutrition Planning",
-      description: "Personalized meal plans and dietary recommendations based on your health goals.",
-      color: "from-green-500 to-emerald-600",
-      gradient: "group-hover:bg-gradient-to-br from-green-500/20 to-emerald-500/20"
+      icon: <FaUserCircle className="w-8 h-8" />,
+      title: "Personalized to You",
+      description: "Set up a health profile once, and every conversation is tailored to your age, goals, and activity level.",
+      color: "from-sky-500 to-blue-600",
     },
     {
-      icon: <FaRunning className="w-10 h-10" />,
-      title: "Fitness Tracking",
-      description: "Custom workout plans and real-time exercise tracking with AI optimization.",
-      color: "from-blue-500 to-indigo-600",
-      gradient: "group-hover:bg-gradient-to-br from-blue-500/20 to-indigo-500/20"
-    },
-    {
-      icon: <FaBrain className="w-10 h-10" />,
+      icon: <FaBrain className="w-8 h-8" />,
       title: "Mental Wellness",
-      description: "Meditation schedules and stress management techniques for mental health.",
-      color: "from-purple-500 to-violet-600",
-      gradient: "group-hover:bg-gradient-to-br from-purple-500/20 to-violet-500/20"
+      description: "Get support with stress, sleep, and everyday mental wellbeing, delivered with care.",
+      color: "from-indigo-500 to-violet-600",
     },
     {
-      icon: <FaBed className="w-10 h-10" />,
-      title: "Sleep Analysis",
-      description: "Advanced sleep tracking and optimization recommendations for better rest.",
-      color: "from-indigo-500 to-blue-600",
-      gradient: "group-hover:bg-gradient-to-br from-indigo-500/20 to-blue-500/20"
+      icon: <FaShieldAlt className="w-8 h-8" />,
+      title: "Safety First",
+      description: "Built-in guidance for urgent symptoms, with clear reminders that this is not a replacement for medical care.",
+      color: "from-rose-500 to-red-600",
     },
-    {
-      icon: <FaWeight className="w-10 h-10" />,
-      title: "Weight Management",
-      description: "Smart weight tracking and personalized goal-setting with progress insights.",
-      color: "from-orange-500 to-amber-600",
-      gradient: "group-hover:bg-gradient-to-br from-orange-500/20 to-amber-500/20"
-    },
-    {
-      icon: <FaNotesMedical className="w-10 h-10" />,
-      title: "Medical Records",
-      description: "Secure storage and management of your health records and medications.",
-      color: "from-teal-500 to-cyan-600",
-      gradient: "group-hover:bg-gradient-to-br from-teal-500/20 to-cyan-500/20"
-    },
-    {
-      icon: <FaChartLine className="w-10 h-10" />,
-      title: "Health Analytics",
-      description: "Comprehensive health data analysis and predictive wellness insights.",
-      color: "from-pink-500 to-rose-600",
-      gradient: "group-hover:bg-gradient-to-br from-pink-500/20 to-rose-500/20"
-    }
   ];
 
   return (
-    <section className="py-24">
+    <section className="py-20 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-20">
-          <motion.h2 
+        <div className="text-center mb-16">
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight"
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-4xl font-bold text-white mb-4"
           >
-            Comprehensive Health & Wellness
+            What HealthAI can help with
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto px-4"
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-lg text-gray-400 max-w-2xl mx-auto"
           >
-            Transform your health journey with AI-powered insights and personalized recommendations
+            A focused set of tools built to give you useful, trustworthy health guidance.
           </motion.p>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
             <motion.div
-              key={index}
+              key={feature.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative"
+              className="group relative overflow-hidden rounded-2xl bg-white/[0.03] backdrop-blur-xl p-6 border border-white/10 transition-all duration-300 hover:-translate-y-1 hover:border-white/20"
             >
-              <div className={`absolute inset-0 rounded-3xl transition-all duration-300 opacity-0 group-hover:opacity-100 ${feature.gradient}`} />
-              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-900/20 to-blue-900/20  backdrop-blur-xl p-8 h-full transition-all duration-300 group-hover:-translate-y-2 border border-gray-700/50">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} p-3 flex items-center justify-center mb-6 text-white`}>
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 transition-all duration-300">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 mb-6 line-clamp-3">
-                  {feature.description}
-                </p>
-                <div className="absolute bottom-8 left-8 right-8">
-                  <div className={`h-0.5 bg-gradient-to-r ${feature.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`} />
-                </div>
+              <div className={`w-14 h-14 rounded-xl bg-gradient-to-r ${feature.color} p-3 flex items-center justify-center mb-5 text-white`}>
+                {feature.icon}
               </div>
+              <h3 className="text-lg font-semibold text-white mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </div>

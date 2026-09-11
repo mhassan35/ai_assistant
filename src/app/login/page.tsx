@@ -1,107 +1,112 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { Suspense, useState } from "react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FaHeartbeat } from "react-icons/fa";
+import { login } from "@/lib/api-client";
+import { useAuth } from "@/lib/auth-context";
 
-export default function Login() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+const inputClass =
+  "w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition-colors focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50";
+const labelClass = "mb-1.5 block text-xs font-medium text-slate-400";
+
+function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { refresh } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your login logic here
-    console.log('Form submitted:', formData);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setError(null);
+    setLoading(true);
+    try {
+      await login(email, password);
+      await refresh();
+      router.push(searchParams.get("next") || "/chat");
+      router.refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not sign you in.");
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="flex items-center justify-center p-4 min-h-[calc(100vh-64px)] mt-16">
-      <div className="max-w-[400px] w-full space-y-6 bg-[#020617]/95 p-8 rounded-lg border border-gray-700/50">
-        <div>
-          <h2 className="text-center text-2xl font-semibold text-gray-100">
-            Welcome Back
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-400">
-            Don&apos;t have an account?{' '}
-            <Link href="/signup" className="text-blue-400 hover:text-blue-300">
-              Sign up
-            </Link>
-          </p>
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-16">
+      <div className="w-full max-w-sm">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-500/15 text-teal-300">
+            <FaHeartbeat className="h-5 w-5" />
+          </div>
+          <h1 className="text-lg font-semibold text-white">Welcome back</h1>
+          <p className="mt-1 text-sm text-slate-400">Sign in to continue with HealthAI</p>
         </div>
 
-        <form className="space-y-5" onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl"
+        >
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-              Email
-            </label>
+            <label className={labelClass} htmlFor="email">Email</label>
             <input
               id="email"
-              name="email"
               type="email"
               required
-              className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-md text-sm 
-                       text-gray-100 placeholder-gray-500
-                       focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              autoComplete="email"
+              className={inputClass}
               placeholder="you@example.com"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-
           <div>
-            <div className="flex items-center justify-between mb-1">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300">
-                Password
-              </label>
-              <Link href="/forgot-password" className="text-sm text-blue-400 hover:text-blue-300">
-                Forgot password?
-              </Link>
-            </div>
+            <label className={labelClass} htmlFor="password">Password</label>
             <input
               id="password"
-              name="password"
               type="password"
               required
-              className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-md text-sm 
-                       text-gray-100 placeholder-gray-500
-                       focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your password"
-              value={formData.password}
-              onChange={handleChange}
+              autoComplete="current-password"
+              className={inputClass}
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
-          <div className="flex items-center">
-            <input
-              id="remember-me"
-              name="remember-me"
-              type="checkbox"
-              className="h-4 w-4 rounded border-gray-700 bg-gray-800/50 text-blue-500 focus:ring-blue-500 focus:ring-offset-gray-900"
-            />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
-              Remember me
-            </label>
-          </div>
+          {error && (
+            <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-200">
+              {error}
+            </p>
+          )}
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-gray-100 
-                     font-medium rounded-md focus:outline-none focus:ring-2 
-                     focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-blue-500 
-                     transition-colors duration-200"
+            disabled={loading}
+            className="w-full rounded-xl bg-gradient-to-r from-teal-600 to-sky-600 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
           >
-            Sign in
+            {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
+
+        <p className="mt-6 text-center text-sm text-slate-400">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="text-teal-300 hover:text-teal-200">
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

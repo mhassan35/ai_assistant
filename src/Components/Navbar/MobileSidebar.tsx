@@ -1,8 +1,9 @@
 'use client';
 
-import { FaRobot, FaTimes } from 'react-icons/fa';
+import { FaHeartbeat, FaTimes, FaSignOutAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { AuthUser } from '@/lib/api-client';
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -12,9 +13,11 @@ interface MobileSidebarProps {
     icon: React.ReactNode;
     label: string;
   }>;
+  user: AuthUser | null;
+  onLogout: () => void;
 }
 
-const MobileSidebar = ({ isOpen, onClose, menuItems }: MobileSidebarProps) => {
+const MobileSidebar = ({ isOpen, onClose, menuItems, user, onLogout }: MobileSidebarProps) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -35,16 +38,17 @@ const MobileSidebar = ({ isOpen, onClose, menuItems }: MobileSidebarProps) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 w-[300px] h-full bg-gradient-to-b from-[#020617]/95 to-purple-900/20 backdrop-blur-md p-6 z-50 border-l border-purple-500/20"
+            className="fixed top-0 right-0 w-[300px] h-full bg-gradient-to-b from-[#020617]/95 to-teal-900/10 backdrop-blur-md p-6 z-50 border-l border-white/10 flex flex-col"
           >
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center space-x-3">
-                <FaRobot className="w-8 h-8 text-purple-400" />
-                <span className="text-xl font-bold text-purple-400">Menu</span>
+                <FaHeartbeat className="w-7 h-7 text-teal-400" />
+                <span className="text-xl font-bold text-teal-400">Menu</span>
               </div>
               <button
                 onClick={onClose}
-                className="text-gray-300 hover:text-purple-400 transition-colors duration-300"
+                className="text-gray-300 hover:text-teal-400 transition-colors duration-300"
+                aria-label="Close menu"
               >
                 <FaTimes className="w-6 h-6" />
               </button>
@@ -60,13 +64,45 @@ const MobileSidebar = ({ isOpen, onClose, menuItems }: MobileSidebarProps) => {
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    className="text-gray-300 hover:text-purple-400 transition-colors duration-300 flex items-center space-x-3 p-2 rounded-lg hover:bg-purple-500/10"
+                    className="text-gray-300 hover:text-teal-400 transition-colors duration-300 flex items-center space-x-3 p-2 rounded-lg hover:bg-teal-500/10"
                   >
                     {item.icon}
                     <span className="font-medium">{item.label}</span>
                   </Link>
                 </motion.div>
               ))}
+            </div>
+
+            <div className="mt-auto pt-6 border-t border-white/10">
+              {user ? (
+                <div className="space-y-3">
+                  <p className="text-xs text-gray-500 truncate px-2">{user.email}</p>
+                  <button
+                    onClick={onLogout}
+                    className="w-full flex items-center space-x-3 p-2 rounded-lg text-gray-300 hover:text-red-300 hover:bg-red-500/10 transition-colors duration-300"
+                  >
+                    <FaSignOutAlt className="w-5 h-5" />
+                    <span className="font-medium">Log out</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <Link
+                    href="/login"
+                    onClick={onClose}
+                    className="block w-full text-center p-2 rounded-lg text-gray-300 hover:text-teal-400 hover:bg-teal-500/10 transition-colors duration-300 font-medium"
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    href="/signup"
+                    onClick={onClose}
+                    className="block w-full text-center p-2.5 rounded-lg bg-gradient-to-r from-teal-600 to-sky-600 text-white font-medium hover:opacity-90 transition-opacity"
+                  >
+                    Sign up
+                  </Link>
+                </div>
+              )}
             </div>
           </motion.div>
         </>
@@ -75,4 +111,4 @@ const MobileSidebar = ({ isOpen, onClose, menuItems }: MobileSidebarProps) => {
   );
 };
 
-export default MobileSidebar; 
+export default MobileSidebar;

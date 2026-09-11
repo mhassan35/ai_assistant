@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-// Chat Message Component
 interface ChatMessageProps {
   isAi: boolean;
   message: string;
@@ -10,18 +9,18 @@ interface ChatMessageProps {
 
 const ChatMessage = ({ isAi, message, isTyping = false }: ChatMessageProps) => {
   return (
-    <div className={`flex items-start gap-4 ${!isAi ? 'flex-row-reverse' : ''}`}>
-      <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${
-        isAi ? 'bg-blue-500' : 'bg-purple-500'
+    <div className={`flex items-start gap-3 ${!isAi ? 'flex-row-reverse' : ''}`}>
+      <div className={`w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center ${
+        isAi ? 'bg-teal-500/20 text-teal-300' : 'bg-sky-500/20 text-sky-300'
       }`}>
-        <span className="text-white text-xs">{isAi ? 'AI' : 'U'}</span>
+        <span className="text-xs font-medium">{isAi ? 'AI' : 'U'}</span>
       </div>
-      <motion.div 
+      <motion.div
         className={`relative max-w-[80%] ${
-          isAi 
-            ? 'bg-white/10 rounded-[20px] rounded-tl-none' 
-            : 'bg-purple-500/30 rounded-[20px] rounded-tr-none'
-        } px-4 py-3`}
+          isAi
+            ? 'bg-white/[0.06] border border-white/10 rounded-[18px] rounded-tl-sm'
+            : 'bg-gradient-to-br from-teal-600 to-sky-600 rounded-[18px] rounded-tr-sm'
+        } px-4 py-2.5`}
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.2 }}
@@ -38,14 +37,13 @@ const ChatMessage = ({ isAi, message, isTyping = false }: ChatMessageProps) => {
   );
 };
 
-// Typing Animation Component
 const TypingAnimation = () => {
   return (
-    <div className="flex items-center space-x-2 px-4 py-3">
+    <div className="flex items-center space-x-1.5 px-1 py-1">
       {[0, 1, 2].map((dot) => (
         <motion.div
           key={dot}
-          className="w-2 h-2 bg-white/50 rounded-full"
+          className="w-1.5 h-1.5 bg-white/50 rounded-full"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.4, 1, 0.4]
@@ -64,24 +62,24 @@ const TypingAnimation = () => {
 
 const messages = [
   {
-    text: "How can you help me with my business?",
+    text: "What's a good way to improve my sleep?",
     isAi: false,
-    delay: 1000
+    delay: 800
   },
   {
-    text: "I can assist you with various aspects of your business",
+    text: "A consistent bedtime, less screen time before bed, and a cool, dark room can all help. Want a simple wind-down routine?",
     isAi: true,
-    delay: 2000
+    delay: 1800
   },
   {
-    text: "Can you give me a specific example?",
+    text: "Yes please, and a quick dinner idea too",
     isAi: false,
-    delay: 2000
+    delay: 1800
   },
   {
-    text: "I can help analyze your customer data to identify real-time insights for better decision-making.",
+    text: "Here's a 15-minute wind-down routine, plus a light, protein-rich dinner idea suited to your goals.",
     isAi: true,
-    delay: 2000
+    delay: 1800
   }
 ];
 
@@ -97,32 +95,33 @@ const AnimatedChatDemo = () => {
           setTimeout(() => {
             setIsTyping(false);
             setVisibleMessages(prev => prev + 1);
-          }, 1500);
+          }, 1200);
         } else {
           setVisibleMessages(prev => prev + 1);
         }
       }, messages[visibleMessages].delay);
 
       return () => clearTimeout(timer);
+    } else {
+      const resetTimer = setTimeout(() => setVisibleMessages(0), 3000);
+      return () => clearTimeout(resetTimer);
     }
   }, [visibleMessages]);
 
   return (
     <motion.div
-      className="relative w-full h-[500px] bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-2xl backdrop-blur-sm border border-white/10 p-6 shadow-xl"
+      className="relative w-full h-[440px] sm:h-[480px] bg-white/[0.03] rounded-2xl backdrop-blur-sm border border-white/10 p-6 shadow-xl"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Window controls */}
       <div className="absolute top-4 left-4 flex space-x-2">
-        <div className="w-3 h-3 rounded-full bg-red-500" />
-        <div className="w-3 h-3 rounded-full bg-yellow-500" />
-        <div className="w-3 h-3 rounded-full bg-green-500" />
+        <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+        <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
       </div>
 
-      {/* Chat messages */}
-      <div className="mt-8 space-y-4 max-h-[380px] overflow-y-auto">
+      <div className="mt-8 space-y-4 max-h-[320px] overflow-y-auto pr-1">
         {messages.slice(0, visibleMessages).map((message, index) => (
           <ChatMessage
             key={index}
@@ -131,22 +130,21 @@ const AnimatedChatDemo = () => {
           />
         ))}
         {isTyping && (
-          <div className="flex items-start space-x-4">
-            <div className="w-8 h-8 rounded-full bg-blue-500 flex-shrink-0" />
-            <div className="bg-white/10 rounded-lg">
+          <div className="flex items-start space-x-3">
+            <div className="w-7 h-7 rounded-full bg-teal-500/20 flex-shrink-0" />
+            <div className="bg-white/[0.06] border border-white/10 rounded-[18px] rounded-tl-sm">
               <TypingAnimation />
             </div>
           </div>
         )}
       </div>
 
-      {/* Input field */}
       <div className="absolute bottom-6 left-6 right-6">
-        <div className="bg-white/10 rounded-lg p-4 border border-white/10">
+        <div className="bg-white/5 rounded-lg p-3.5 border border-white/10">
           <div className="flex items-center">
-            <div className="flex-grow bg-white/10 h-6 rounded"></div>
-            <button className="ml-4 w-8 h-8 rounded-full bg-purple-500/50 flex items-center justify-center">
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex-grow bg-white/5 h-5 rounded"></div>
+            <button className="ml-3 w-7 h-7 rounded-full bg-teal-500/30 flex items-center justify-center">
+              <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
             </button>
@@ -157,4 +155,4 @@ const AnimatedChatDemo = () => {
   );
 };
 
-export default AnimatedChatDemo; 
+export default AnimatedChatDemo;
